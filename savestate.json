@@ -1,0 +1,18 @@
+{
+    "run": "Yes",
+    "model": "InceptionV3",
+    "method": "Integrated Gradients",
+    "smoothgrad": "No",
+    "idgi": "No",
+    "image": "Default",
+    "class": "Top Class",
+    "classnum": -1,
+    "steps": 20,
+    "baseline": "black",
+    "max_sig": 0.5,
+    "grad_step": 0.01,
+    "sqrt": "No",
+    "noise_steps": 20,
+    "noise_var": 0.1,
+    "steps_at": "-"
+}
