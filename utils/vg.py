@@ -38,7 +38,10 @@ class VG():
             gradientsf = torch.autograd.grad(outputs, processed, grad_outputs=torch.ones_like(outputs))[0].detach()
             vgn[k1:k2] = gradientsf
             del gradientsf, outputs, x_batch, processed, output
-            torch.mps.empty_cache()
+            if torch.backends.mps.is_available():
+                torch.mps.empty_cache()
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
             gc.collect()
         vgn = torch.movedim(vgn, (1,2,3),(3,1,2))
         return vgn.numpy()
