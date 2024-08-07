@@ -5,6 +5,7 @@ from torchvision import transforms
 
 device = torch.device("mps") if torch.backends.mps.is_available() else torch.device("cpu")
 device = torch.device("cuda") if torch.cuda.is_available() else device
+device = torch.device("cpu") if device == torch.device("mps") else device
 
 class BlurIG():
     def __init__(self, model, load, preprocess):

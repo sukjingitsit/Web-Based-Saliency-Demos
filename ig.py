@@ -5,6 +5,7 @@ from torchvision import transforms
 
 device = torch.device("mps") if torch.backends.mps.is_available() else torch.device("cpu")
 device = torch.device("cuda") if torch.cuda.is_available() else device
+device = torch.device("cpu") if device == torch.device("mps") else device
 
 class IG():
     def __init__(self, model, load, preprocess):
@@ -37,10 +38,12 @@ class IG():
             x_step_batched = []
             if baseline is None or baseline == 'black':
                 baseline = torch.zeros((x_value.shape[0], x_value.shape[1], x_value.shape[2], x_value.shape[3]))
-            if baseline == 'white':
+            elif baseline == 'white':
                 baseline = torch.ones((x_value.shape[0], x_value.shape[1], x_value.shape[2], x_value.shape[3]))
-            if baseline == 'random':
+            elif baseline == 'random':
                 baseline = torch.rand((x_value.shape[0], x_value.shape[1], x_value.shape[2], x_value.shape[3]))
+            else:
+                baseline = torch.zeros((x_value.shape[0], x_value.shape[1], x_value.shape[2], x_value.shape[3]))
             gradientsn = torch.zeros((steps, x_value.shape[0], x_value.shape[1], x_value.shape[2], x_value.shape[3]))
             outputsn = torch.zeros((steps, x_value.shape[0]))
             for i in range(steps):
